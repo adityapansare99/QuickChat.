@@ -59,7 +59,7 @@ const ChatContainer = (props) => {
               <p
                 className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${
                   message.senderId === "680f50e4f10f3cd28382ecf9"
-                    ? "rouned-br-none"
+                    ? "rounded-br-none"
                     : "rounded-bl-none"
                 }`}
               >
