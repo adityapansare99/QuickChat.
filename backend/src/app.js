@@ -15,4 +15,7 @@ app.use(cookieParser());
 import router from "./routes/healtcheck.route.js";
 app.use("/", router);
 
+import userRouter from "./routes/user.route.js";
+app.use("/user", userRouter);
+
 export { app };
