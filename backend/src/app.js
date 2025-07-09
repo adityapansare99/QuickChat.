@@ -18,4 +18,7 @@ app.use("/", router);
 import userRouter from "./routes/user.route.js";
 app.use("/user", userRouter);
 
+import messagerouter from "./routes/message.route.js";
+app.use("/message", messagerouter);
+
 export { app };
