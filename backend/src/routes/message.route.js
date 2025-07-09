@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {getAllUsers,getMessages,markMessageAsSeen} from "../controllers/message.controller.js";
+import {getAllUsers,getMessages,markMessageAsSeen,sendMessage} from "../controllers/message.controller.js";
 import {auth} from "../middlewares/auth.middleware.js" 
 
 const messagerouter=Router();

@@ -121,6 +121,8 @@ const sendMessage = asynchandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, newMessage, "Message Send"));
   } catch (error) {
+    console.log(error);
+    
     res
       .status(400)
       .json(new ApiResponse(400, error.message, "something went wrong"));

@@ -2,13 +2,16 @@ import { app } from "./app.js";
 import dotenv from "dotenv";
 import { dbconnection } from "./db/index.js";
 import { Server, Socket } from "socket.io";
+import http from "http"; 
 
 dotenv.config({
   path: "./.env",
 });
 
+const server = http.createServer(app);
+
 //init socket.io server
-export const io = new Server(Server, {
+export const io = new Server(server, {
   cors: {
     origin: "*",
   },
