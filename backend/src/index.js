@@ -41,6 +41,11 @@ io.on("connection", (socket) => {
 
 const port = process.env.port || 8002;
 
+server.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
+
+
 dbconnection()
   .then(() => {
     app.listen(port, () => {
