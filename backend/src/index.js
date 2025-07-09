@@ -15,12 +15,26 @@ export const io = new Server(Server, {
 });
 
 //store online users
-export const userSocketMap={}; //{userId:socketId}
+export const userSocketMap = {}; //{userId:socketId}
 
 //socket.io connection handler
-io.on("connection",(socket)=>{
-  
-})
+io.on("connection", (socket) => {
+  const userId = socket.handshake.query.userId;
+  console.log("user connected: ", userId);
+
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+  }
+
+  //emit online users to all connected clients
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected: ", userId);
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  });
+});
 
 const port = process.env.port || 8002;
 

@@ -6,6 +6,7 @@ import validator from "validator";
 import { uploadoncloudinary } from "../Utils/cloudinary.js";
 import Message from "../models/message.model.js";
 import { response } from "express";
+import { io, userSocketMap } from "../index.js";
 
 //get all users except the logged in user (for sidebar)
 const getAllUsers = asynchandler(async (req, res) => {
@@ -64,7 +65,9 @@ const getMessages = asynchandler(async (req, res) => {
     );
     res.status(200).json(new ApiResponse(200, { messages }, "success"));
   } catch (error) {
-    res.status(500).json(new ApiResponse(500, error.message, "something went wrong"));
+    res
+      .status(500)
+      .json(new ApiResponse(500, error.message, "something went wrong"));
   }
 });
 
@@ -72,47 +75,56 @@ const getMessages = asynchandler(async (req, res) => {
 const markMessageAsSeen = asynchandler(async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     await Message.findByIdAndUpdate(id, { seen: true });
 
     res.status(200).json(new ApiResponse(200, {}, "success"));
   } catch (error) {
-    res.status(500).json(new ApiResponse(500, error.message, "something went wrong"));
+    res
+      .status(500)
+      .json(new ApiResponse(500, error.message, "something went wrong"));
   }
 });
 
 //send message to selected user
 const sendMessage = asynchandler(async (req, res) => {
   try {
-    const {text}=req.body;
-    const receiverId=req.params.id;
-    const senderId=req.user._id;
-    const {image}=req.file?.path;
+    const { text } = req.body;
+    const receiverId = req.params.id;
+    const senderId = req.user._id;
+    const { image } = req.file?.path;
 
-    if(image){
-      const response=await uploadoncloudinary(image);
+    if (image) {
+      const response = await uploadoncloudinary(image);
 
-      if(!response){
-        return res.status(500).json(new ApiResponse(500,{},'Image not Send'));
+      if (!response) {
+        return res.status(500).json(new ApiResponse(500, {}, "Image not Send"));
       }
     }
 
-    const newMessage=await Message.create({
+    const newMessage = await Message.create({
       senderId,
       receiverId,
       text,
-      image:response?.url
+      image: response?.url,
     });
 
-    if(!newMessage){
-      return res.status(500).json(new ApiResponse(500,{},'Message not Send'));
+    if (!newMessage) {
+      return res.status(500).json(new ApiResponse(500, {}, "Message not Send"));
     }
 
-    res.status(200).json(new ApiResponse(200,newMessage,'Message Send'));
+    //emit the new message to the receiver's socket
+    const receiverSocketId = userSocketMap[receiverId];
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
+    res.status(200).json(new ApiResponse(200, newMessage, "Message Send"));
   } catch (error) {
-    res.status(400).json(new ApiResponse(400, error.message, "something went wrong"));
+    res
+      .status(400)
+      .json(new ApiResponse(400, error.message, "something went wrong"));
   }
-})
+});
 
-export { getAllUsers ,getMessages,markMessageAsSeen};
+export { getAllUsers, getMessages, markMessageAsSeen, sendMessage };
