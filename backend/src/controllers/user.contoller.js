@@ -3,7 +3,7 @@ import { asynchandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiError.js";
 import validator from "validator";
-import { uploadoncloudinary } from "../Utils/cloudinary.js";
+import { uploadoncloudinary } from "../utils/cloudinary.js";
 
 //user sign up
 const register = asynchandler(async (req, res) => {
