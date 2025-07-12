@@ -10,30 +10,38 @@ export const ChatProvider = ({ children }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [unseenMessages, setUnseenMessages] = useState({});
 
-  const { socket, axios } = useContext(AuthContext);
+  const { socket, axios,token, } = useContext(AuthContext);
 
   //get all users for side bar
   const getUsers = async () => {
+    if(!token)
+      return;
+
     try {
+      axios.defaults.headers.common["Authorization"] = token;
       const { data } = await axios.get("/message/users");
       if (data.success) {
         setUsers(data.data.filteredUsers);
         setUnseenMessages(data.data.unseenMessages);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong!");
+      console.log(error);
     }
   };
 
   //function to get messages for selected user
   const getMessages = async (userId) => {
+    if(!userId){
+      return;
+    }
+
     try {
       const { data } = await axios.get(`/message/${userId}`);
       if (data.success) {
         setMessages(data.data.messages);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong!");
+      toast.error(error?.response?.data?.message);
     }
   };
 

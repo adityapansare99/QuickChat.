@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const ChatContainer = () => {
   const { messages, selectedUser, setSelectedUser, getMessages, sendMessage } =
     useContext(ChatContext);
-  const { authUser, onlineUsers } = useContext(AuthContext);
+  const { authUser, onlineUsers} = useContext(AuthContext);
   const [input, setInput] = useState("");
 
   const handleSendMessage = async (e) => {
@@ -52,7 +52,7 @@ const ChatContainer = () => {
   return selectedUser ? (
     <div className="h-full max-md:flex max-md:flex-col overflow-scroll relative backdrop-blur-lg">
       {/* Header */}
-      <div className="flex h-16 items-center gap-3 py-3 mx-4 border-b border-stone-500">
+      <div className="flex max-md:fixed max-md:top-0 max-md:right-0 max-md:left-0 max-mdL h-16 items-center gap-3 py-3 mx-4 border-b border-stone-500">
         <img
           src={selectedUser.profilePic || assets.avatar_icon}
           alt=""
@@ -77,7 +77,7 @@ const ChatContainer = () => {
       </div>
 
       {/* chat Histroy */}
-      <div className="flex max-md:mb-10 flex-col h-[calc(100%-120px] overflow-y-scroll p-3 pb-6">
+      <div className="flex max-md:mb-10 max-md:mt-16 flex-col h-[calc(100%-120px] overflow-y-scroll p-3 pb-6">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -122,7 +122,7 @@ const ChatContainer = () => {
       </div>
 
       {/* Footer */}
-      <div className="absolute max-md:bottom-0 left-0 right-0 flex items-center gap-3 p-3">
+      <div className="absolute max-md:bottom-0 max-md:fixed left-0 right-0 flex items-center gap-3 p-3">
         <div className="rounded-full bg-gray-100/12 px-3 flex flex-1 items-center">
           <input
             onChange={(e) => {
