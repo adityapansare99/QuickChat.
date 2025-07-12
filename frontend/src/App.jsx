@@ -9,7 +9,7 @@ import { AuthContext } from "./context/AuthContext";
 const App = () => {
   const { token } = useContext(AuthContext);
   return (
-    <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
+    <div className="bg-[url('/bgImage.svg')] bg-contain">
       <Toaster />
       <Routes>
         <Route path="/" element={token ? <Home /> : <Navigate to="/login" />} />
