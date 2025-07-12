@@ -3,7 +3,7 @@ import { asynchandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from "../utils/apiError.js";
 import validator from "validator";
-import { uploadoncloudinary } from "../Utils/cloudinary.js";
+import { uploadoncloudinary } from "../utils/cloudinary.js";
 import Message from "../models/message.model.js";
 import { response } from "express";
 import { io, userSocketMap } from "../index.js";
