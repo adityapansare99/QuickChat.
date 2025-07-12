@@ -162,6 +162,7 @@ const updateProfile = asynchandler(async (req, res) => {
         new ApiResponse(200, { updatedUser }, "Profile updated successfully")
       );
   } catch (error) {
+    console.log(  error);
     throw new ApiError(500, "Unable to update profile", error);
   }
 });
