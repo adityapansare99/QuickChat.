@@ -46,19 +46,19 @@ const getAllUsers = asynchandler(async (req, res) => {
 //get all messages for selected user
 const getMessages = asynchandler(async (req, res) => {
   try {
-    const { id: selectedUserId } = req.params;
+    const { id } = req.params;
     const myId = req.user._id;
 
     const messages = await Message.find({
       $or: [
-        { senderId: myId, receiverId: selectedUserId },
-        { senderId: selectedUserId, receiverId: myId },
+        { senderId: myId, receiverId: id },
+        { senderId: id, receiverId: myId },
       ],
     });
 
     await Message.updateMany(
       {
-        senderId: selectedUserId,
+        senderId: id,
         receiverId: myId,
       },
       { seen: true }
@@ -89,24 +89,26 @@ const markMessageAsSeen = asynchandler(async (req, res) => {
 //send message to selected user
 const sendMessage = asynchandler(async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, image } = req.body;
     const receiverId = req.params.id;
     const senderId = req.user._id;
-    const { image } = req.file?.path;
 
+    let imageUrl = "";
     if (image) {
       const response = await uploadoncloudinary(image);
-
       if (!response) {
-        return res.status(500).json(new ApiResponse(500, {}, "Image not Send"));
+        return res
+          .status(500)
+          .json(new ApiResponse(500, {}, "Image not uploaded"));
       }
+      imageUrl = response.secure_url;
     }
 
     const newMessage = await Message.create({
       senderId,
       receiverId,
       text,
-      image: response?.url,
+      image: imageUrl,
     });
 
     if (!newMessage) {
@@ -122,7 +124,7 @@ const sendMessage = asynchandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, newMessage, "Message Send"));
   } catch (error) {
     console.log(error);
-    
+
     res
       .status(400)
       .json(new ApiResponse(400, error.message, "something went wrong"));

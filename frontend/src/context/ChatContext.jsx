@@ -15,7 +15,7 @@ export const ChatProvider = ({ children }) => {
   //get all users for side bar
   const getUsers = async () => {
     try {
-      await axios.get("/message/users");
+      const { data } = await axios.get("/message/users");
       if (data.success) {
         setUsers(data.data.filteredUsers);
         setUnseenMessages(data.data.unseenMessages);
@@ -45,7 +45,7 @@ export const ChatProvider = ({ children }) => {
         messageData
       );
       if (data.success) {
-        setMessages((prevMessages) => [...prevMessages, data.data.newMessage]);
+        setMessages((prevMessages) => [...prevMessages, data.data]);
       } else {
         toast.error(data?.message || "Something went wrong!");
       }
@@ -91,7 +91,6 @@ export const ChatProvider = ({ children }) => {
     selectedUser,
     unseenMessages,
     getUsers,
-    setMessages,
     sendMessage,
     setSelectedUser,
     getMessages,
