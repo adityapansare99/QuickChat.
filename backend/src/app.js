@@ -11,7 +11,6 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-
 import router from "./routes/healtcheck.route.js";
 app.use("/", router);
 

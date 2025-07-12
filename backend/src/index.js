@@ -2,7 +2,7 @@ import { app } from "./app.js";
 import dotenv from "dotenv";
 import { dbconnection } from "./db/index.js";
 import { Server, Socket } from "socket.io";
-import http from "http"; 
+import http from "http";
 
 dotenv.config({
   path: "./.env",
@@ -44,7 +44,6 @@ const port = process.env.port || 8002;
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
-
 
 dbconnection()
   .then(() => {

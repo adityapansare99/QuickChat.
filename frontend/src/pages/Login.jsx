@@ -3,7 +3,7 @@ import assets from "../assets/assets";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const {login}=useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [currentState, setCurrentState] = useState("Sign Up");
   const [fullName, setFullName] = useState("");
@@ -12,17 +12,21 @@ const Login = () => {
   const [bio, setBio] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmitHandler=((e)=>{
+  const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if(currentState==="Sign Up" && !isSubmitted){
-      setIsSubmitted(true)
+    if (currentState === "Sign Up" && !isSubmitted) {
+      setIsSubmitted(true);
       return;
     }
 
-    login(currentState==="Sign Up" ? "register" : "login",{fullName,email,password,bio});
-
-  })
+    login(currentState === "Sign Up" ? "register" : "login", {
+      fullName,
+      email,
+      password,
+      bio,
+    });
+  };
   return (
     <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
       <img src={assets.logo_big} alt="" className="w-[min(30vw,250px)]" />
@@ -34,9 +38,10 @@ const Login = () => {
         <h2 className="font-medium text-2xl flex justify-between items-center">
           {currentState}{" "}
           {isSubmitted && (
-            <img onClick={()=>{
-              setIsSubmitted(false);
-            }}
+            <img
+              onClick={() => {
+                setIsSubmitted(false);
+              }}
               src={assets.arrow_icon}
               alt=""
               className="w-5 cursor-pointer"

@@ -154,25 +154,29 @@ const updateProfile = asynchandler(async (req, res) => {
       });
     }
 
-    const updatedUser=await User.findById(user._id).select('-password');
+    const updatedUser = await User.findById(user._id).select("-password");
 
-    res.status(200).json(new ApiResponse(200, {updatedUser}, "Profile updated successfully"));
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, { updatedUser }, "Profile updated successfully")
+      );
   } catch (error) {
     throw new ApiError(500, "Unable to update profile", error);
   }
 });
 
 //get user profile
-const getProfile=asynchandler(async(req,res)=>{
-  const user=req.user;
+const getProfile = asynchandler(async (req, res) => {
+  const user = req.user;
 
-  if(!user){
-    return res.status(401).json(new ApiResponse(401,{},'Login to continue'));
+  if (!user) {
+    return res.status(401).json(new ApiResponse(401, {}, "Login to continue"));
   }
 
-  const UserProfile=await User.findById(user._id).select('-password');
+  const UserProfile = await User.findById(user._id).select("-password");
 
-  res.status(200).json(new ApiResponse(200,{UserProfile},'success'));
-})
+  res.status(200).json(new ApiResponse(200, { UserProfile }, "success"));
+});
 
-export { register, login, updateProfile,getProfile };
+export { register, login, updateProfile, getProfile };

@@ -1,12 +1,17 @@
-import {Router} from "express";
-import {getAllUsers,getMessages,markMessageAsSeen,sendMessage} from "../controllers/message.controller.js";
-import {auth} from "../middlewares/auth.middleware.js" 
+import { Router } from "express";
+import {
+  getAllUsers,
+  getMessages,
+  markMessageAsSeen,
+  sendMessage,
+} from "../controllers/message.controller.js";
+import { auth } from "../middlewares/auth.middleware.js";
 
-const messagerouter=Router();
+const messagerouter = Router();
 
-messagerouter.route('/users').get(auth,getAllUsers);
-messagerouter.route('/:id').get(auth,getMessages);
-messagerouter.route('/mark/:id').put(auth,markMessageAsSeen);
-messagerouter.route("/send/:id").post(auth,sendMessage);
+messagerouter.route("/users").get(auth, getAllUsers);
+messagerouter.route("/:id").get(auth, getMessages);
+messagerouter.route("/mark/:id").put(auth, markMessageAsSeen);
+messagerouter.route("/send/:id").post(auth, sendMessage);
 
 export default messagerouter;

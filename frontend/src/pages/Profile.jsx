@@ -5,14 +5,13 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 const Profile = () => {
-  const { authUser, updateProfile, checkAuth,token } = useContext(AuthContext);
+  const { authUser, updateProfile, checkAuth, token } = useContext(AuthContext);
 
   useEffect(() => {
-    if(token){
+    if (token) {
       axios.defaults.headers.common["Authorization"] = token;
       checkAuth();
     }
-    
   }, []);
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -58,7 +57,7 @@ const Profile = () => {
               src={
                 selectedImage
                   ? URL.createObjectURL(selectedImage)
-                  : authUser?.profilePic || assets.avatar_icon 
+                  : authUser?.profilePic || assets.avatar_icon
               }
               alt=""
             />
