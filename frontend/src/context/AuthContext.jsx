@@ -30,8 +30,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   //login function
-  const login = async (state, credentials) => {
+  const login = async (state, credentials,checkbox) => {
     try {
+      if(checkbox===false){
+        toast.error("Please agree to the terms of use & privacy policy.");
+        return;
+      }
       const { data } = await axios.post(`/user/${state}`, credentials);
       if (data.success) {
         setAuthUser(data.data.user);
