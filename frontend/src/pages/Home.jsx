@@ -17,7 +17,7 @@ const Home = () => {
       {/* Theme Toggle Button */}
       <button
         onClick={() => setIsDarkTheme(!isDarkTheme)}
-        className={`fixed top-4 sm:right-4 right-2 z-50 p-3 rounded-full shadow-xl transition-all duration-300 ${
+        className={`fixed sm:top-4 top-3 sm:right-4 right-2 z-50 p-3 rounded-full shadow-xl transition-all duration-300 ${
           isDarkTheme
             ? 'bg-gray-900 text-yellow-400 hover:bg-gray-800 border border-gray-700'
             : 'bg-white text-indigo-600 hover:bg-gray-100 shadow-lg'
