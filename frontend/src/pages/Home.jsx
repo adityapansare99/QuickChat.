@@ -3,10 +3,11 @@ import Sidebar from "../components/Sidebar";
 import ChatContainer from "../components/ChatContainer";
 import RightSidebar from "../components/RightSidebar";
 import { ChatContext } from "../context/ChatContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Home = () => {
   const { selectedUser } = useContext(ChatContext);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const { isDarkTheme, toggleTheme,setIsDarkTheme } = useContext(ThemeContext);
 
   return (
     <div className={`w-full h-screen sm:px-[0.5%] sm:py-[0.5%] transition-colors duration-300 ${
@@ -14,9 +15,10 @@ const Home = () => {
         ? 'bg-gradient-to-br from-gray-900 via-black to-gray-900' 
         : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
     }`}>
-      {/* Theme Toggle Button */}
       <button
-        onClick={() => setIsDarkTheme(!isDarkTheme)}
+        onClick={() =>{
+          setIsDarkTheme(!isDarkTheme)
+        }}
         className={`fixed sm:top-4 top-3 sm:right-4 right-2 z-50 p-3 rounded-full shadow-xl transition-all duration-300 ${
           isDarkTheme
             ? 'bg-gray-900 text-yellow-400 hover:bg-gray-800 border border-gray-700'

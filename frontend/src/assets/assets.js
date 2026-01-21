@@ -10,6 +10,12 @@ import menu_icon from "./menu_icon.png";
 import arrow_icon from "./arrow_icon.png";
 import code from "./code.svg";
 import bgImage from "./bgImage.svg";
+import logolarge from "./logolarge.png";
+import light_image from "./light_image.svg";
+import about_light from "./about_light.svg";
+import search_light from "./search_light.svg";
+import more_light from "./more_light.svg";
+import logo_light from "./logo_light.png";
 const assets = {
   avatar_icon,
   gallery_icon,
@@ -23,6 +29,12 @@ const assets = {
   arrow_icon,
   code,
   bgImage,
+  logolarge,
+  light_image,
+  about_light,
+  search_light,
+  more_light,
+  logo_light,
 };
 
 export default assets;

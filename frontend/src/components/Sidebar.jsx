@@ -41,13 +41,13 @@ const Sidebar = ({ isDarkTheme }) => {
     >
       <div className="pb-5">
         <div className="flex justify-between items-center">
-          <img src={assets.logo} alt="logo" className="max-w-40" />
+          <img src={isDarkTheme ? assets.logo : assets.logo_light} alt="logo" className="max-w-40" />
           <div className="relative py-2 group">
             <img
               onClick={() => {
                 setEdit(!edit);
               }}
-              src={assets.menu_icon}
+              src={isDarkTheme ? assets.menu_icon : assets.more_light}
               alt="menu icon"
               className={`fixed right-13 top-6 sm:relative sm:right-0 sm:top-0 max-h-5 cursor-pointer transition-transform hover:scale-110 ${
                 isDarkTheme ? '' : 'opacity-70'
@@ -101,7 +101,7 @@ const Sidebar = ({ isDarkTheme }) => {
             ? 'bg-[#282142] focus-within:bg-[#3a2f5a]' 
             : 'bg-gray-100 focus-within:bg-gray-200'
         }`}>
-          <img src={assets.search_icon} alt="Search" className="w-3 opacity-70" />
+          <img src={isDarkTheme ? assets.search_icon : assets.search_light} alt="Search" className="w-3 opacity-70" />
           <input
             type="text"
             value={inputValue}

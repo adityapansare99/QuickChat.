@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Profile = () => {
   const { authUser, updateProfile, checkAuth, token } = useContext(AuthContext);
+  const { isDarkTheme, toggleTheme,setIsDarkTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (token) {
@@ -18,7 +20,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState(authUser?.fullName);
   const [bio, setBio] = useState(authUser?.bio);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -33,18 +34,21 @@ const Profile = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-cover bg-no-repeat flex items-center justify-center transition-colors duration-300 ${
-      isDarkTheme 
-        ? 'bg-gradient-to-br from-gray-900 via-black to-gray-900' 
-        : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
-    }`}>
-      {/* Theme Toggle Button */}
+    <div
+      className={`min-h-screen bg-cover bg-no-repeat flex items-center justify-center transition-colors duration-300 ${
+        isDarkTheme
+          ? "bg-gradient-to-br from-gray-900 via-black to-gray-900"
+          : "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
+      }`}
+    >
       <button
-        onClick={() => setIsDarkTheme(!isDarkTheme)}
+        onClick={() => {
+          setIsDarkTheme(!isDarkTheme);
+        }}
         className={`fixed top-4 right-4 z-50 p-3 rounded-full shadow-xl transition-all duration-300 ${
           isDarkTheme
-            ? 'bg-gray-900 text-yellow-400 hover:bg-gray-800 border border-gray-700'
-            : 'bg-white text-indigo-600 hover:bg-gray-100 shadow-lg'
+            ? "bg-gray-900 text-yellow-400 hover:bg-gray-800 border border-gray-700"
+            : "bg-white text-indigo-600 hover:bg-gray-100 shadow-lg"
         }`}
       >
         {isDarkTheme ? (
@@ -58,39 +62,52 @@ const Profile = () => {
         )}
       </button>
 
-      {/* Back Button */}
       <button
         onClick={() => navigate("/")}
         className={`fixed top-4 left-4 z-50 p-3 rounded-full shadow-xl transition-all duration-300 flex items-center gap-2 ${
           isDarkTheme
-            ? 'bg-gray-900 text-white hover:bg-gray-800 border border-gray-700'
-            : 'bg-white text-gray-900 hover:bg-gray-100 shadow-lg'
+            ? "bg-gray-900 text-white hover:bg-gray-800 border border-gray-700"
+            : "bg-white text-gray-900 hover:bg-gray-100 shadow-lg"
         }`}
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
         </svg>
       </button>
 
-      <div className={`w-5/6 max-w-2xl sm:my-0 my-20 flex items-center justify-between max-sm:flex-col-reverse rounded-2xl shadow-2xl backdrop-blur-xl transition-all duration-300 ${
-        isDarkTheme
-          ? 'text-gray-300 border-2 border-gray-800 bg-white/8'
-          : 'text-gray-900 border-2 border-white/50 bg-white/80'
-      }`}>
+      <div
+        className={`w-5/6 max-w-2xl sm:my-0 my-20 flex items-center justify-between max-sm:flex-col-reverse rounded-2xl shadow-2xl backdrop-blur-xl transition-all duration-300 ${
+          isDarkTheme
+            ? "text-gray-300 border-2 border-gray-800 bg-white/8"
+            : "text-gray-900 border-2 border-white/50 bg-white/80"
+        }`}
+      >
         <form
           onSubmit={onSubmitHandler}
           className="flex flex-col gap-5 p-10 flex-1"
         >
-          <h3 className={`text-2xl font-semibold ${
-            isDarkTheme ? 'text-white' : 'text-gray-900'
-          }`}>Profile Details</h3>
+          <h3
+            className={`text-2xl font-semibold ${
+              isDarkTheme ? "text-white" : "text-gray-900"
+            }`}
+          >
+            Profile Details
+          </h3>
 
           <label
             htmlFor="avatar"
             className={`flex items-center gap-3 cursor-pointer p-3 rounded-xl transition-all duration-200 ${
-              isDarkTheme
-                ? 'hover:bg-gray-800/50'
-                : 'hover:bg-gray-50'
+              isDarkTheme ? "hover:bg-gray-800/50" : "hover:bg-gray-50"
             }`}
           >
             <input
@@ -112,23 +129,41 @@ const Profile = () => {
                 }
                 alt=""
               />
-              <div className={`absolute -bottom-1 -right-1 p-1 rounded-full ${
-                isDarkTheme
-                  ? 'bg-gray-700'
-                  : 'bg-indigo-500'
-              }`}>
-                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              <div
+                className={`absolute -bottom-1 -right-1 p-1 rounded-full ${
+                  isDarkTheme ? "bg-gray-700" : "bg-indigo-500"
+                }`}
+              >
+                <svg
+                  className="w-3 h-3 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
                 </svg>
               </div>
             </div>
             <div>
-              <p className={`text-sm font-medium ${
-                isDarkTheme ? 'text-white' : 'text-gray-900'
-              }`}>Upload profile image</p>
-              <p className={`text-xs ${
-                isDarkTheme ? 'text-gray-500' : 'text-gray-500'
-              }`}>JPG, PNG or GIF</p>
+              <p
+                className={`text-sm font-medium ${
+                  isDarkTheme ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Upload profile image
+              </p>
+              <p
+                className={`text-xs ${
+                  isDarkTheme ? "text-gray-500" : "text-gray-500"
+                }`}
+              >
+                JPG, PNG or GIF
+              </p>
             </div>
           </label>
 
@@ -142,8 +177,8 @@ const Profile = () => {
             placeholder={authUser?.fullName}
             className={`p-3 rounded-xl border outline-none transition-all duration-200 ${
               isDarkTheme
-                ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:border-gray-600 focus:bg-gray-800'
-                : 'border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:border-indigo-400 focus:bg-white'
+                ? "border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:border-gray-600 focus:bg-gray-800"
+                : "border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:border-indigo-400 focus:bg-white"
             }`}
           />
 
@@ -155,8 +190,8 @@ const Profile = () => {
             placeholder={authUser?.bio}
             className={`p-3 rounded-xl border outline-none transition-all duration-200 resize-none ${
               isDarkTheme
-                ? 'border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:border-gray-600 focus:bg-gray-800'
-                : 'border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:border-indigo-400 focus:bg-white'
+                ? "border-gray-700 bg-gray-800/50 text-white placeholder-gray-400 focus:border-gray-600 focus:bg-gray-800"
+                : "border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:border-indigo-400 focus:bg-white"
             }`}
             rows={4}
           ></textarea>
@@ -164,8 +199,8 @@ const Profile = () => {
           <button
             className={`p-3 rounded-xl text-lg cursor-pointer font-medium shadow-lg transition-all duration-200 ${
               isDarkTheme
-                ? 'bg-gradient-to-r from-gray-700 to-gray-900 text-white hover:from-gray-600 hover:to-gray-800'
-                : 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600'
+                ? "bg-gradient-to-r from-gray-700 to-gray-900 text-white hover:from-gray-600 hover:to-gray-800"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600"
             }`}
             type="submit"
           >
@@ -184,11 +219,13 @@ const Profile = () => {
               }
               alt=""
             />
-            <div className={`absolute bottom-2 right-2 px-3 py-1 rounded-full text-xs font-medium ${
-              isDarkTheme
-                ? 'bg-gray-800 text-white border border-gray-700'
-                : 'bg-white text-gray-900 border border-gray-200 shadow-lg'
-            }`}>
+            <div
+              className={`absolute bottom-2 right-2 px-3 py-1 rounded-full text-xs font-medium ${
+                isDarkTheme
+                  ? "bg-gray-800 text-white border border-gray-700"
+                  : "bg-white text-gray-900 border border-gray-200 shadow-lg"
+              }`}
+            >
               Preview
             </div>
           </div>
